@@ -1,44 +1,63 @@
 package com.company.coursemanagement.application.service;
 
-import com.company.coursemanagement.application.dto.StudentDTO;
 import com.company.coursemanagement.domain.exception.StudentNotFoundException;
 import com.company.coursemanagement.domain.model.Student;
 import com.company.coursemanagement.domain.repository.StudentRepository;
+import com.company.coursemanagement.domain.repository.InMemoryStudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class StudentService {
-    private final StudentRepository studentRepository;
+public class StudentService implements StudentRepository {
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    private final List<Student> students;
+
+    public StudentService(InMemoryStudentRepository studentRepository) {
+        this.students = new ArrayList<>();
     }
 
-    public Student create(StudentDTO dto) {
-        Student student = new Student(dto.firstName(), dto.lastName(), dto.email(), dto.birthDate());
-        return studentRepository.save(student);
-    }
-
-    public Student findById(Long id) {
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException(id));
-    }
-
-    public List<Student> findAll() {
-        return studentRepository.findAll();
-    }
-
-    public Student update(Long id, StudentDTO dto) {
-        Student existing = findById(id);
-        Student updated = new Student(existing.getId(), dto.firstName(), dto.lastName(),
-                dto.email(), dto.birthDate());
-        return studentRepository.save(updated);
-    }
-
-    public void delete(Long id) {
-        if (!studentRepository.existsById(id)) {
-            throw new StudentNotFoundException(id);
+    @Override
+    public Student save(Student student) {
+        if (student.getId() == null) {
+            throw new IllegalArgumentException("Student ID cannot be null");
         }
-        studentRepository.deleteById(id);
+
+        for (int i = 0; i < students.size(); i++) {
+            if (students.get(i).getId().equals(student.getId())) {
+                students.set(i, student); // Actualizar
+                return student;
+            }
+        }
+
+        students.add(student); // Guardar nuevo
+        return student;
+    }
+
+    @Override
+    public Optional<Student> findById(Long id) {
+        return students.stream()
+                .filter(student -> student.getId().equals(id))
+                .findFirst();
+    }
+
+    @Override
+    public List<Student> findAll() {
+        return new ArrayList<>(students);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Student student = findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException("Student not found with id: " + id));
+
+        students.remove(student);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return students.stream()
+                .anyMatch(student -> student.getId().equals(id));
     }
 }

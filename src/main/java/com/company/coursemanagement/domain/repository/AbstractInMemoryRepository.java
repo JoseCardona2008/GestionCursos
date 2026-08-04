@@ -1,4 +1,4 @@
-package com.company.coursemanagement.infrastructure.repository;
+package com.company.coursemanagement.domain.repository;
 
 import java.util.concurrent.atomic.AtomicLong;
 

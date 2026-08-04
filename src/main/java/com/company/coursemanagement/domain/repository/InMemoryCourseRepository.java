@@ -1,7 +1,6 @@
-package com.company.coursemanagement.infrastructure.repository;
+package com.company.coursemanagement.domain.repository;
 
 import com.company.coursemanagement.domain.model.Course;
-import com.company.coursemanagement.domain.repository.CourseRepository;
 
 import java.util.LinkedHashMap;
 import java.util.List;
