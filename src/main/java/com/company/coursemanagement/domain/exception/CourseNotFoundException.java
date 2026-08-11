@@ -1,7 +1,7 @@
 package com.company.coursemanagement.domain.exception;
 
 public class CourseNotFoundException extends BusinessException {
-    public CourseNotFoundException(Long id) {
-        super("Course not found: " + id);
+    public CourseNotFoundException(String id) {
+        super("Curso no encontrado: " + id);
     }
 }

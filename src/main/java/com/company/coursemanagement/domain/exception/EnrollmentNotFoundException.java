@@ -1,7 +1,7 @@
 package com.company.coursemanagement.domain.exception;
 
 public class EnrollmentNotFoundException extends BusinessException {
-    public EnrollmentNotFoundException(Long id) {
-        super("Enrollment not found: " + id);
+    public EnrollmentNotFoundException(String id) {
+        super("Inscripcion no encontrada: " + id);
     }
 }
