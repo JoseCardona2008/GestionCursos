@@ -1,15 +1,14 @@
 spring:
   application:
     name: app-gestion-de-cursos
-
-datasource:
-  url: jdbc:postgresql://localhost:5435/gestion_cursos
-  username: username
-  password: 1234
-  driver-class-name: org.postgresql.Driver
-
+  datasource:
+    url: jdbc:mysql://localhost:3306/course_management?useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
-    ddl-auto: update
+    hibernate:
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
