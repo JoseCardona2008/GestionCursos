@@ -2,9 +2,9 @@ spring:
   application:
     name: app-gestion-de-cursos
   datasource:
-    url: jdbc:mysql://localhost:3306/course_management?useSSL=false&serverTimezone=UTC
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3306/gestion_cursos?useSSL=false&serverTimezone=UTC
+    username: jose_curso
+    password: 12345
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -13,3 +13,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+server:
+  port: 8080

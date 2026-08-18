@@ -11,16 +11,16 @@ public final class Course {
 
     public Course(Long id, String code, String name, String description, Integer maxCapacity) {
         if (code == null || code.isBlank()) {
-            throw new IllegalArgumentException("code cannot be null or blank");
+            throw new IllegalArgumentException("el código no puede ser nulo o vacío");
         }
         if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("name cannot be null or blank");
+            throw new IllegalArgumentException("el nombre no puede ser nulo o vacío");
         }
         if (description == null || description.isBlank()) {
-            throw new IllegalArgumentException("description cannot be null or blank");
+            throw new IllegalArgumentException("la descripción no puede ser nula o vacía");
         }
         if (maxCapacity == null || maxCapacity <= 0) {
-            throw new IllegalArgumentException("maxCapacity must be a positive number");
+            throw new IllegalArgumentException("la capacidad máxima debe ser un número positivo");
         }
         this.id = id;
         this.code = code;
@@ -71,8 +71,8 @@ public final class Course {
 
     @Override
     public String toString() {
-        return "Course{id=" + id + ", code='" + code + '\'' +
-                ", name='" + name + '\'' + ", description='" + description + '\'' +
-                ", maxCapacity=" + maxCapacity + '}';
+        return "Curso{id=" + id + ", codigo='" + code + '\'' +
+                ", nombre='" + name + '\'' + ", descripcion='" + description + '\'' +
+                ", capacidadMaxima=" + maxCapacity + '}';
     }
 }

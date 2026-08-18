@@ -35,14 +35,14 @@ public class EnrollmentService {
                 .orElseThrow(() -> new CourseNotFoundException("Curso no encontrado con id: " + courseId));
 
         long inscritos = enrollmentRepository.findByCourseId(courseId).stream()
-                .filter(e -> e.getStatus() == EnrollmentStatus.ACTIVE)
+                .filter(e -> e.getStatus() == EnrollmentStatus.ACTIVO)
                 .count();
 
         if (inscritos >= course.getMaxCapacity()) {
             throw new BusinessException("El curso ha alcanzado su capacidad maxima");
         }
 
-        Enrollment enrollment = new Enrollment(studentId, courseId, LocalDate.now(), EnrollmentStatus.ACTIVE);
+        Enrollment enrollment = new Enrollment(studentId, courseId, LocalDate.now(), EnrollmentStatus.ACTIVO);
         return enrollmentRepository.save(enrollment);
     }
 

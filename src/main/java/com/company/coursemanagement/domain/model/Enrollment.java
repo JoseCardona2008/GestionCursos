@@ -12,16 +12,16 @@ public final class Enrollment {
 
     public Enrollment(Long id, Long studentId, Long courseId, LocalDate enrollmentDate, EnrollmentStatus status) {
         if (studentId == null) {
-            throw new IllegalArgumentException("studentId cannot be null");
+            throw new IllegalArgumentException("el id del estudiante no puede ser nulo");
         }
         if (courseId == null) {
-            throw new IllegalArgumentException("courseId cannot be null");
+            throw new IllegalArgumentException("el id del curso no puede ser nulo");
         }
         if (enrollmentDate == null) {
-            throw new IllegalArgumentException("enrollmentDate cannot be null");
+            throw new IllegalArgumentException("la fecha de inscripción no puede ser nula");
         }
         if (status == null) {
-            throw new IllegalArgumentException("status cannot be null");
+            throw new IllegalArgumentException("el estado no puede ser nulo");
         }
         this.id = id;
         this.studentId = studentId;
@@ -76,8 +76,8 @@ public final class Enrollment {
 
     @Override
     public String toString() {
-        return "Enrollment{id=" + id + ", studentId=" + studentId +
-                ", courseId=" + courseId + ", enrollmentDate=" + enrollmentDate +
-                ", status=" + status + '}';
+        return "Inscripcion{id=" + id + ", idEstudiante=" + studentId +
+                ", idCurso=" + courseId + ", fechaInscripcion=" + enrollmentDate +
+                ", estado=" + status + '}';
     }
 }

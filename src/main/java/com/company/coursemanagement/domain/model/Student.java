@@ -12,16 +12,16 @@ public final class Student {
 
     public Student(Long id, String firstName, String lastName, String email, LocalDate birthDate) {
         if (firstName == null || firstName.isBlank()) {
-            throw new IllegalArgumentException("firstName cannot be null or blank");
+            throw new IllegalArgumentException("el nombre no puede ser nulo o vacío");
         }
         if (lastName == null || lastName.isBlank()) {
-            throw new IllegalArgumentException("lastName cannot be null or blank");
+            throw new IllegalArgumentException("el apellido no puede ser nulo o vacío");
         }
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("email cannot be null or blank");
+            throw new IllegalArgumentException("el correo no puede ser nulo o vacío");
         }
         if (birthDate == null) {
-            throw new IllegalArgumentException("birthDate cannot be null");
+            throw new IllegalArgumentException("la fecha de nacimiento no puede ser nula");
         }
         this.id = id;
         this.firstName = firstName;
@@ -76,8 +76,8 @@ public final class Student {
 
     @Override
     public String toString() {
-        return "Student{id=" + id + ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' + ", email='" + email + '\'' +
-                ", birthDate=" + birthDate + '}';
+        return "Estudiante{id=" + id + ", nombre='" + firstName + '\'' +
+                ", apellido='" + lastName + '\'' + ", correo='" + email + '\'' +
+                ", fechaNacimiento=" + birthDate + '}';
     }
 }
