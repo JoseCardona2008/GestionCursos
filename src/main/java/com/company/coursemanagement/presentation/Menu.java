@@ -9,29 +9,29 @@ public abstract class Menu {
         this.scanner = scanner;
     }
 
-    public abstract void mostrar();
+    public abstract void show();
 
-    protected int leerEntero(String mensaje) {
-        System.out.print(mensaje);
+    protected int readInt(String message) {
+        System.out.print(message);
         while (true) {
-            String linea = scanner.nextLine().trim();
-            if (linea.isEmpty()) continue;
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) continue;
             try {
-                return Integer.parseInt(linea);
+                return Integer.parseInt(line);
             } catch (NumberFormatException e) {
-                System.out.println("Ingrese un numero valido");
-                System.out.print(mensaje);
+                System.out.println("Please enter a valid number");
+                System.out.print(message);
             }
         }
     }
 
-    protected String leerTexto(String mensaje) {
-        System.out.print(mensaje);
+    protected String readText(String message) {
+        System.out.print(message);
         return scanner.nextLine().trim();
     }
 
-    protected void pausa() {
-        System.out.println("Presione Enter para continuar...");
+    protected void pause() {
+        System.out.println("Press Enter to continue...");
         scanner.nextLine();
     }
 }

@@ -23,45 +23,45 @@ public class EnrollmentService {
         this.courseRepository = courseRepository;
     }
 
-    public Enrollment inscribir(Long studentId, Long courseId) {
+    public Enrollment enroll(Long studentId, Long courseId) {
         if (!studentRepository.existsById(studentId)) {
-            throw new StudentNotFoundException("Estudiante no encontrado con id: " + studentId);
+            throw new StudentNotFoundException("Student not found with id: " + studentId);
         }
         if (!courseRepository.existsById(courseId)) {
-            throw new CourseNotFoundException("Curso no encontrado con id: " + courseId);
+            throw new CourseNotFoundException("Course not found with id: " + courseId);
         }
 
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new CourseNotFoundException("Curso no encontrado con id: " + courseId));
+                .orElseThrow(() -> new CourseNotFoundException("Course not found with id: " + courseId));
 
-        long inscritos = enrollmentRepository.findByCourseId(courseId).stream()
-                .filter(e -> e.getStatus() == EnrollmentStatus.ACTIVO)
+        long enrolled = enrollmentRepository.findByCourseId(courseId).stream()
+                .filter(e -> e.getStatus() == EnrollmentStatus.ACTIVE)
                 .count();
 
-        if (inscritos >= course.getMaxCapacity()) {
-            throw new BusinessException("El curso ha alcanzado su capacidad maxima");
+        if (enrolled >= course.getMaxCapacity()) {
+            throw new BusinessException("Course has reached its maximum capacity");
         }
 
-        Enrollment enrollment = new Enrollment(studentId, courseId, LocalDate.now(), EnrollmentStatus.ACTIVO);
+        Enrollment enrollment = new Enrollment(studentId, courseId, LocalDate.now(), EnrollmentStatus.ACTIVE);
         return enrollmentRepository.save(enrollment);
     }
 
-    public List<Enrollment> listarPorEstudiante(Long studentId) {
+    public List<Enrollment> findByStudentId(Long studentId) {
         return enrollmentRepository.findByStudentId(studentId);
     }
 
-    public List<Enrollment> listarPorCurso(Long courseId) {
+    public List<Enrollment> findByCourseId(Long courseId) {
         return enrollmentRepository.findByCourseId(courseId);
     }
 
-    public List<Enrollment> listarTodos() {
+    public List<Enrollment> findAll() {
         return enrollmentRepository.findAll();
     }
 
-    public void cancelarInscripcion(Long id) {
+    public void cancel(Long id) {
         Enrollment enrollment = enrollmentRepository.findById(id)
                 .orElseThrow(() ->
-                        new EnrollmentNotFoundException("Inscripcion no encontrada con id: " + id));
+                        new EnrollmentNotFoundException("Enrollment not found with id: " + id));
         enrollmentRepository.deleteById(id);
     }
 }

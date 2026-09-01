@@ -6,10 +6,8 @@ import com.company.coursemanagement.application.service.StudentService;
 import com.company.coursemanagement.domain.repository.InMemoryCourseRepository;
 import com.company.coursemanagement.domain.repository.InMemoryEnrollmentRepository;
 import com.company.coursemanagement.domain.repository.InMemoryStudentRepository;
-import com.company.coursemanagement.domain.repository.StudentRepository;
 import com.company.coursemanagement.presentation.CourseMenu;
 import com.company.coursemanagement.presentation.EnrollmentMenu;
-import com.company.coursemanagement.presentation.Menu;
 import com.company.coursemanagement.presentation.StudentMenu;
 
 import java.util.Scanner;
@@ -30,36 +28,36 @@ public class Main {
         StudentMenu studentMenu = new StudentMenu(studentService, scanner);
         CourseMenu courseMenu = new CourseMenu(courseService, scanner);
         EnrollmentMenu enrollmentMenu = new EnrollmentMenu(enrollmentService, scanner);
-        boolean salir = false;
-        while (!salir) {
-            System.out.println("\n=== GESTION DE CURSOS ===");
-            System.out.println("1. Estudiantes");
-            System.out.println("2. Cursos");
-            System.out.println("3. Inscripciones");
-            System.out.println("0. Salir");
-            int opcion = leerEntero(scanner, "Seleccione una opcion: ");
-            switch (opcion) {
-                case 1 -> studentMenu.mostrar();
-                case 2 -> courseMenu.mostrar();
-                case 3 -> enrollmentMenu.mostrar();
-                case 0 -> salir = true;
-                default -> System.out.println("Opcion no valida");
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("\n=== COURSE MANAGEMENT ===");
+            System.out.println("1. Students");
+            System.out.println("2. Courses");
+            System.out.println("3. Enrollments");
+            System.out.println("0. Exit");
+            int option = readInt(scanner, "Select an option: ");
+            switch (option) {
+                case 1 -> studentMenu.show();
+                case 2 -> courseMenu.show();
+                case 3 -> enrollmentMenu.show();
+                case 0 -> exit = true;
+                default -> System.out.println("Invalid option");
             }
         }
-        System.out.println("Hasta luego!");
+        System.out.println("Goodbye!");
         scanner.close();
     }
 
-    private static int leerEntero(Scanner scanner, String mensaje) {
-        System.out.print(mensaje);
+    private static int readInt(Scanner scanner, String message) {
+        System.out.print(message);
         while (true) {
-            String linea = scanner.nextLine().trim();
-            if (linea.isEmpty()) continue;
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) continue;
             try {
-                return Integer.parseInt(linea);
+                return Integer.parseInt(line);
             } catch (NumberFormatException e) {
-                System.out.println("Ingrese un numero valido");
-                System.out.print(mensaje);
+                System.out.println("Please enter a valid number");
+                System.out.print(message);
             }
         }
     }

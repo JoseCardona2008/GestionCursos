@@ -16,80 +16,80 @@ public class EnrollmentMenu extends Menu {
     }
 
     @Override
-    public void mostrar() {
-        boolean volver = false;
-        while (!volver) {
-            System.out.println("\n=== MENU INSCRIPCIONES ===");
-            System.out.println("1. Inscribir estudiante en curso");
-            System.out.println("2. Ver inscripciones por estudiante");
-            System.out.println("3. Ver inscripciones por curso");
-            System.out.println("4. Ver todas las inscripciones");
-            System.out.println("5. Cancelar inscripcion");
-            System.out.println("0. Volver");
-            int opcion = leerEntero("Seleccione una opcion: ");
-            switch (opcion) {
-                case 1 -> inscribirEstudiante();
-                case 2 -> verPorEstudiante();
-                case 3 -> verPorCurso();
-                case 4 -> verTodas();
-                case 5 -> cancelarInscripcion();
-                case 0 -> volver = true;
-                default -> System.out.println("Opcion no valida");
+    public void show() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== ENROLLMENT MENU ===");
+            System.out.println("1. Enroll student in course");
+            System.out.println("2. View enrollments by student");
+            System.out.println("3. View enrollments by course");
+            System.out.println("4. View all enrollments");
+            System.out.println("5. Cancel enrollment");
+            System.out.println("0. Back");
+            int option = readInt("Select an option: ");
+            switch (option) {
+                case 1 -> enrollStudent();
+                case 2 -> viewByStudent();
+                case 3 -> viewByCourse();
+                case 4 -> viewAll();
+                case 5 -> cancelEnrollment();
+                case 0 -> back = true;
+                default -> System.out.println("Invalid option");
             }
         }
     }
 
-    private void inscribirEstudiante() {
-        Long studentId = (long) leerEntero("ID del estudiante: ");
-        Long courseId = (long) leerEntero("ID del curso: ");
+    private void enrollStudent() {
+        Long studentId = (long) readInt("Student ID: ");
+        Long courseId = (long) readInt("Course ID: ");
         try {
-            Enrollment enrollment = enrollmentService.inscribir(studentId, courseId);
-            System.out.println("Inscripcion realizada con ID: " + enrollment.getId());
+            Enrollment enrollment = enrollmentService.enroll(studentId, courseId);
+            System.out.println("Enrollment created with ID: " + enrollment.getId());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    private void verPorEstudiante() {
-        Long studentId = (long) leerEntero("ID del estudiante: ");
-        List<Enrollment> inscripciones = enrollmentService.listarPorEstudiante(studentId);
-        if (inscripciones.isEmpty()) {
-            System.out.println("El estudiante no tiene inscripciones");
+    private void viewByStudent() {
+        Long studentId = (long) readInt("Student ID: ");
+        List<Enrollment> enrollments = enrollmentService.findByStudentId(studentId);
+        if (enrollments.isEmpty()) {
+            System.out.println("Student has no enrollments");
             return;
         }
-        inscripciones.forEach(i ->
-                System.out.println("Inscripcion ID: " + i.getId() + " | Curso ID: " + i.getCourseId() + " | Fecha: " + i.getEnrollmentDate() + " | Estado: " + i.getStatus())
+        enrollments.forEach(e ->
+                System.out.println("Enrollment ID: " + e.getId() + " | Course ID: " + e.getCourseId() + " | Date: " + e.getEnrollmentDate() + " | Status: " + e.getStatus())
         );
     }
 
-    private void verPorCurso() {
-        Long courseId = (long) leerEntero("ID del curso: ");
-        List<Enrollment> inscripciones = enrollmentService.listarPorCurso(courseId);
-        if (inscripciones.isEmpty()) {
-            System.out.println("El curso no tiene inscripciones");
+    private void viewByCourse() {
+        Long courseId = (long) readInt("Course ID: ");
+        List<Enrollment> enrollments = enrollmentService.findByCourseId(courseId);
+        if (enrollments.isEmpty()) {
+            System.out.println("Course has no enrollments");
             return;
         }
-        inscripciones.forEach(i ->
-                System.out.println("Inscripcion ID: " + i.getId() + " | Estudiante ID: " + i.getStudentId() + " | Fecha: " + i.getEnrollmentDate() + " | Estado: " + i.getStatus())
+        enrollments.forEach(e ->
+                System.out.println("Enrollment ID: " + e.getId() + " | Student ID: " + e.getStudentId() + " | Date: " + e.getEnrollmentDate() + " | Status: " + e.getStatus())
         );
     }
 
-    private void verTodas() {
-        List<Enrollment> inscripciones = enrollmentService.listarTodos();
-        if (inscripciones.isEmpty()) {
-            System.out.println("No hay inscripciones registradas");
+    private void viewAll() {
+        List<Enrollment> enrollments = enrollmentService.findAll();
+        if (enrollments.isEmpty()) {
+            System.out.println("No enrollments registered");
             return;
         }
-        inscripciones.forEach(i ->
-                System.out.println("ID: " + i.getId() + " | Estudiante: " + i.getStudentId() + " | Curso: " + i.getCourseId() + " | Estado: " + i.getStatus())
+        enrollments.forEach(e ->
+                System.out.println("ID: " + e.getId() + " | Student: " + e.getStudentId() + " | Course: " + e.getCourseId() + " | Status: " + e.getStatus())
         );
     }
 
-    private void cancelarInscripcion() {
-        Long id = (long) leerEntero("ID de la inscripcion a cancelar: ");
+    private void cancelEnrollment() {
+        Long id = (long) readInt("Enrollment ID to cancel: ");
         try {
-            enrollmentService.cancelarInscripcion(id);
-            System.out.println("Inscripcion cancelada correctamente");
+            enrollmentService.cancel(id);
+            System.out.println("Enrollment cancelled successfully");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }

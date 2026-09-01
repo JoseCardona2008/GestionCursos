@@ -15,33 +15,33 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public Course guardar(Course course) {
+    public Course save(Course course) {
         if (courseRepository.findByCode(course.getCode()).isPresent()) {
-            throw new IllegalArgumentException("El codigo del curso ya existe");
+            throw new IllegalArgumentException("Course code already exists");
         }
         return courseRepository.save(course);
     }
 
-    public Optional<Course> buscarPorId(Long id) {
+    public Optional<Course> findById(Long id) {
         return courseRepository.findById(id);
     }
 
-    public Optional<Course> buscarPorCodigo(String code) {
+    public Optional<Course> findByCode(String code) {
         return courseRepository.findByCode(code);
     }
 
-    public List<Course> listarTodos() {
+    public List<Course> findAll() {
         return courseRepository.findAll();
     }
 
-    public void eliminarPorId(Long id) {
+    public void deleteById(Long id) {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() ->
-                        new CourseNotFoundException("Curso no encontrado con id: " + id));
+                        new CourseNotFoundException("Course not found with id: " + id));
         courseRepository.deleteById(id);
     }
 
-    public boolean existePorId(Long id) {
+    public boolean existsById(Long id) {
         return courseRepository.existsById(id);
     }
 }

@@ -1,4 +1,4 @@
-package com.company.coursemanagement.presentation.rest;
+package com.company.coursemanagement.presentation.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

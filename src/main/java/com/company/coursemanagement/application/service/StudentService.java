@@ -4,7 +4,6 @@ import com.company.coursemanagement.domain.exception.StudentNotFoundException;
 import com.company.coursemanagement.domain.model.Student;
 import com.company.coursemanagement.domain.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,29 +15,34 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public Student guardar(Student student) {
+    public Student save(Student student) {
         if (student.getId() != null && studentRepository.existsById(student.getId())) {
-            throw new IllegalArgumentException("El ID del estudiante ya existe");
+            throw new IllegalArgumentException("Student ID already exists");
         }
         return studentRepository.save(student);
     }
 
-    public Optional<Student> buscarPorId(Long id) {
+    public Optional<Student> findByIdOptional(Long id) {
         return studentRepository.findById(id);
     }
 
-    public List<Student> listarTodos() {
+    public Student findById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student not found with id: " + id));
+    }
+
+    public List<Student> findAll() {
         return studentRepository.findAll();
     }
 
-    public void eliminarPorId(Long id) {
+    public void deleteById(Long id) {
         Student student = studentRepository.findById(id)
                 .orElseThrow(() ->
-                        new StudentNotFoundException("Estudiante no encontrado con id: " + id));
+                        new StudentNotFoundException("Student not found with id: " + id));
         studentRepository.deleteById(id);
     }
 
-    public boolean existePorId(Long id) {
+    public boolean existsById(Long id) {
         return studentRepository.existsById(id);
     }
 }

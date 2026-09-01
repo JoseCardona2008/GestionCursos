@@ -16,71 +16,71 @@ public class CourseMenu extends Menu {
     }
 
     @Override
-    public void mostrar() {
-        boolean volver = false;
-        while (!volver) {
-            System.out.println("\n=== MENU CURSOS ===");
-            System.out.println("1. Crear curso");
-            System.out.println("2. Buscar curso por ID");
-            System.out.println("3. Buscar curso por codigo");
-            System.out.println("4. Listar todos los cursos");
-            System.out.println("5. Eliminar curso");
-            System.out.println("0. Volver");
-            int opcion = leerEntero("Seleccione una opcion: ");
-            switch (opcion) {
-                case 1 -> crearCurso();
-                case 2 -> buscarCursoPorId();
-                case 3 -> buscarCursoPorCodigo();
-                case 4 -> listarCursos();
-                case 5 -> eliminarCurso();
-                case 0 -> volver = true;
-                default -> System.out.println("Opcion no valida");
+    public void show() {
+        boolean back = false;
+        while (!back) {
+            System.out.println("\n=== COURSE MENU ===");
+            System.out.println("1. Create course");
+            System.out.println("2. Find course by ID");
+            System.out.println("3. Find course by code");
+            System.out.println("4. List all courses");
+            System.out.println("5. Delete course");
+            System.out.println("0. Back");
+            int option = readInt("Select an option: ");
+            switch (option) {
+                case 1 -> createCourse();
+                case 2 -> findCourseById();
+                case 3 -> findCourseByCode();
+                case 4 -> listCourses();
+                case 5 -> deleteCourse();
+                case 0 -> back = true;
+                default -> System.out.println("Invalid option");
             }
         }
     }
 
-    private void crearCurso() {
-        String codigo = leerTexto("Codigo del curso: ");
-        String nombre = leerTexto("Nombre del curso: ");
-        String descripcion = leerTexto("Descripcion: ");
-        Integer capacidad = leerEntero("Capacidad maxima: ");
-        Course course = new Course(null, codigo, nombre, descripcion, capacidad);
-        Course guardado = courseService.guardar(course);
-        System.out.println("Curso creado con ID: " + guardado.getId());
+    private void createCourse() {
+        String code = readText("Course code: ");
+        String name = readText("Course name: ");
+        String description = readText("Description: ");
+        Integer capacity = readInt("Max capacity: ");
+        Course course = new Course(null, code, name, description, capacity);
+        Course saved = courseService.save(course);
+        System.out.println("Course created with ID: " + saved.getId());
     }
 
-    private void buscarCursoPorId() {
-        Long id = (long) leerEntero("ID del curso: ");
-        courseService.buscarPorId(id).ifPresentOrElse(
-                c -> System.out.println("Codigo: " + c.getCode() + " | Nombre: " + c.getName() + " | Capacidad: " + c.getMaxCapacity()),
-                () -> System.out.println("Curso no encontrado")
+    private void findCourseById() {
+        Long id = (long) readInt("Course ID: ");
+        courseService.findById(id).ifPresentOrElse(
+                c -> System.out.println("Code: " + c.getCode() + " | Name: " + c.getName() + " | Capacity: " + c.getMaxCapacity()),
+                () -> System.out.println("Course not found")
         );
     }
 
-    private void buscarCursoPorCodigo() {
-        String codigo = leerTexto("Codigo del curso: ");
-        courseService.buscarPorCodigo(codigo).ifPresentOrElse(
-                c -> System.out.println("ID: " + c.getId() + " | Nombre: " + c.getName() + " | Capacidad: " + c.getMaxCapacity()),
-                () -> System.out.println("Curso no encontrado")
+    private void findCourseByCode() {
+        String code = readText("Course code: ");
+        courseService.findByCode(code).ifPresentOrElse(
+                c -> System.out.println("ID: " + c.getId() + " | Name: " + c.getName() + " | Capacity: " + c.getMaxCapacity()),
+                () -> System.out.println("Course not found")
         );
     }
 
-    private void listarCursos() {
-        List<Course> cursos = courseService.listarTodos();
-        if (cursos.isEmpty()) {
-            System.out.println("No hay cursos registrados");
+    private void listCourses() {
+        List<Course> courses = courseService.findAll();
+        if (courses.isEmpty()) {
+            System.out.println("No courses registered");
             return;
         }
-        cursos.forEach(c ->
-                System.out.println("ID: " + c.getId() + " | " + c.getCode() + " | " + c.getName() + " | Capacidad: " + c.getMaxCapacity())
+        courses.forEach(c ->
+                System.out.println("ID: " + c.getId() + " | " + c.getCode() + " | " + c.getName() + " | Capacity: " + c.getMaxCapacity())
         );
     }
 
-    private void eliminarCurso() {
-        Long id = (long) leerEntero("ID del curso a eliminar: ");
+    private void deleteCourse() {
+        Long id = (long) readInt("Course ID to delete: ");
         try {
-            courseService.eliminarPorId(id);
-            System.out.println("Curso eliminado correctamente");
+            courseService.deleteById(id);
+            System.out.println("Course deleted successfully");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
