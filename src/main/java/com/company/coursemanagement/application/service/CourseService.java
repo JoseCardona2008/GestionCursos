@@ -7,41 +7,16 @@ import com.company.coursemanagement.domain.repository.CourseRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class CourseService {
+public interface CourseService {
+    Course save(Course course);
 
-    private final CourseRepository courseRepository;
+    Optional<Course> findById(Long id);
 
-    public CourseService(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-    }
+    Optional<Course> findByCode(String code);
 
-    public Course save(Course course) {
-        if (courseRepository.findByCode(course.getCode()).isPresent()) {
-            throw new IllegalArgumentException("Course code already exists");
-        }
-        return courseRepository.save(course);
-    }
+    List<Course> findAll();
 
-    public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
-    }
+    void deleteById(Long id);
 
-    public Optional<Course> findByCode(String code) {
-        return courseRepository.findByCode(code);
-    }
-
-    public List<Course> findAll() {
-        return courseRepository.findAll();
-    }
-
-    public void deleteById(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() ->
-                        new CourseNotFoundException("Course not found with id: " + id));
-        courseRepository.deleteById(id);
-    }
-
-    public boolean existsById(Long id) {
-        return courseRepository.existsById(id);
-    }
+    boolean existsById(Long id);
 }

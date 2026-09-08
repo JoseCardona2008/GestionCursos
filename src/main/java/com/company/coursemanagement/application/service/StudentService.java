@@ -1,48 +1,21 @@
 package com.company.coursemanagement.application.service;
 
-import com.company.coursemanagement.domain.exception.StudentNotFoundException;
 import com.company.coursemanagement.domain.model.Student;
 import com.company.coursemanagement.domain.repository.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public class StudentService {
+public interface StudentService {
+    Student save(Student student);
 
-    private final StudentRepository studentRepository;
+    Optional<Student> findByIdOptional(Long id);
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
+    Student findById(Long id);
 
-    public Student save(Student student) {
-        if (student.getId() != null && studentRepository.existsById(student.getId())) {
-            throw new IllegalArgumentException("Student ID already exists");
-        }
-        return studentRepository.save(student);
-    }
+    List<Student> findAll();
 
-    public Optional<Student> findByIdOptional(Long id) {
-        return studentRepository.findById(id);
-    }
+    void deleteById(Long id);
 
-    public Student findById(Long id) {
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found with id: " + id));
-    }
-
-    public List<Student> findAll() {
-        return studentRepository.findAll();
-    }
-
-    public void deleteById(Long id) {
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() ->
-                        new StudentNotFoundException("Student not found with id: " + id));
-        studentRepository.deleteById(id);
-    }
-
-    public boolean existsById(Long id) {
-        return studentRepository.existsById(id);
-    }
+    boolean existsById(Long id);
 }

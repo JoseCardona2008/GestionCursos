@@ -3,6 +3,9 @@ package com.company.coursemanagement.application;
 import com.company.coursemanagement.application.service.CourseService;
 import com.company.coursemanagement.application.service.EnrollmentService;
 import com.company.coursemanagement.application.service.StudentService;
+import com.company.coursemanagement.application.service.impl.CourseServiceImpl;
+import com.company.coursemanagement.application.service.impl.EnrollmentServiceImpl;
+import com.company.coursemanagement.application.service.impl.StudentServiceImpl;
 import com.company.coursemanagement.domain.repository.InMemoryCourseRepository;
 import com.company.coursemanagement.domain.repository.InMemoryEnrollmentRepository;
 import com.company.coursemanagement.domain.repository.InMemoryStudentRepository;
@@ -18,16 +21,16 @@ public class Main {
         InMemoryCourseRepository courseRepository = new InMemoryCourseRepository();
         InMemoryEnrollmentRepository enrollmentRepository = new InMemoryEnrollmentRepository();
 
-        StudentService studentService = new StudentService(studentRepository);
-        CourseService courseService = new CourseService(courseRepository);
-        EnrollmentService enrollmentService = new EnrollmentService(enrollmentRepository,
-                studentRepository, courseRepository);
+        StudentService studentService = new StudentServiceImpl(studentRepository);
+        CourseService courseService = new CourseServiceImpl(courseRepository);
+        EnrollmentService enrollmentService = new EnrollmentServiceImpl(enrollmentRepository, studentRepository, courseRepository);
 
         Scanner scanner = new Scanner(System.in);
 
         StudentMenu studentMenu = new StudentMenu(studentService, scanner);
         CourseMenu courseMenu = new CourseMenu(courseService, scanner);
         EnrollmentMenu enrollmentMenu = new EnrollmentMenu(enrollmentService, scanner);
+
         boolean exit = false;
         while (!exit) {
             System.out.println("\n=== COURSE MANAGEMENT ===");
