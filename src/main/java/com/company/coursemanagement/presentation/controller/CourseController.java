@@ -38,6 +38,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<Course> getCourse(@PathVariable Long id) {
         try {
             Optional<Course> course = courseService.findById(id);
@@ -47,10 +48,20 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+=======
+    public Optional<Course> getCourse(@PathVariable Long id) {
+        try {
+            var result = courseService.findById(id);
+            return result;
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            return Optional.empty();
+>>>>>>> c4ff006 (Implementacion de var, try-catch en controllers y creacion de Request/Response DTOs)
         }
     }
 
     @PostMapping
+<<<<<<< HEAD
     public ResponseEntity<?> createCourse(@RequestBody Course course) {
         try {
             Course saved = courseService.save(course);
@@ -59,10 +70,20 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred");
+=======
+    public Course createCourse(@RequestBody Course course) {
+        try {
+            var result = courseService.save(course);
+            return result;
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            return null;
+>>>>>>> c4ff006 (Implementacion de var, try-catch en controllers y creacion de Request/Response DTOs)
         }
     }
 
     @DeleteMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<?> deleteCourse(@PathVariable Long id) {
         try {
             courseService.deleteById(id);
@@ -73,6 +94,13 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred");
+=======
+    public void deleteCourse(@PathVariable Long id) {
+        try {
+            courseService.deleteById(id);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+>>>>>>> c4ff006 (Implementacion de var, try-catch en controllers y creacion de Request/Response DTOs)
         }
     }
 }

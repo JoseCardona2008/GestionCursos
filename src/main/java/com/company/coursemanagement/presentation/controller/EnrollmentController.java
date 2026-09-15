@@ -67,6 +67,7 @@ public class EnrollmentController {
     }
 
     @PostMapping
+<<<<<<< HEAD
     public ResponseEntity<?> enroll(@RequestParam Long studentId, @RequestParam Long courseId) {
         try {
             Enrollment enrollment = enrollmentService.enroll(studentId, courseId);
@@ -77,10 +78,20 @@ public class EnrollmentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred");
+=======
+    public Enrollment enroll(@RequestParam Long studentId, @RequestParam Long courseId) {
+        try {
+            var result = enrollmentService.enroll(studentId, courseId);
+            return result;
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            return null;
+>>>>>>> c4ff006 (Implementacion de var, try-catch en controllers y creacion de Request/Response DTOs)
         }
     }
 
     @DeleteMapping("/{id}")
+<<<<<<< HEAD
     public ResponseEntity<?> cancel(@PathVariable Long id) {
         try {
             enrollmentService.cancel(id);
@@ -91,6 +102,13 @@ public class EnrollmentController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred");
+=======
+    public void cancel(@PathVariable Long id) {
+        try {
+            enrollmentService.cancel(id);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+>>>>>>> c4ff006 (Implementacion de var, try-catch en controllers y creacion de Request/Response DTOs)
         }
     }
 }
