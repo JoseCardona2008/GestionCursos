@@ -1,7 +1,10 @@
 package com.company.coursemanagement.domain.model;
 
+import org.springframework.http.ResponseEntity;
+
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 
 public final class Student {
     private final Long id;
@@ -80,4 +83,5 @@ public final class Student {
                 ", apellido='" + lastName + '\'' + ", correo='" + email + '\'' +
                 ", fechaNacimiento=" + birthDate + '}';
     }
+
 }
